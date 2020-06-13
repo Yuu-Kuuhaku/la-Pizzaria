@@ -1,6 +1,8 @@
 package la.pizzaria;
 
-public class Tamanho {
+import java.io.Serializable;
+
+public class Tamanho implements Serializable {
     private int id;
         private String nomeTamanho;
         private double multValor;
