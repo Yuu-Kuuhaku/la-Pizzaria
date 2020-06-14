@@ -1,6 +1,8 @@
 package la.pizzaria;
 
-public class Borda {
+import java.io.Serializable;
+
+public class Borda implements Serializable{
     private int id;
     private String nome;
     private double valor;
