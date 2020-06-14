@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 public class Pedido {
     private int id;
-//    private Cliente cliente;;
     private int quantSabores; //perguntar ao pessoal se sera implementado
-    private Pizza pizza;
-     private ArrayList <Pizza> ingredientes;
-    private Adicional adicionais;
+    private ArrayList <Pizza> pizzas;
+    private ArrayList <Adicional> aditivos;
+    private Double ValorTotal;
     private Borda borda;
 
-    public Pedido(int id, Pizza pizza, Adicional adicionais, Borda borda) {
+    public Pedido(int id, int quantSabores, ArrayList<Pizza> pizzas, ArrayList<Adicional> aditivos, Double ValorTotal, Borda borda) {
         this.id = id;
-        this.pizza = pizza;
-        this.adicionais = adicionais;
+        this.quantSabores = quantSabores;
+        this.pizzas = pizzas;
+        this.aditivos = aditivos;
+        this.ValorTotal = ValorTotal;
         this.borda = borda;
     }
 
@@ -25,23 +26,37 @@ public class Pedido {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
 
-    public Pizza getPizza() {
-        return pizza;
+    public int getQuantSabores() {
+        return quantSabores;
     }
 
-    public void setPizza(Pizza pizza) {
-        this.pizza = pizza;
+    public void setQuantSabores(int quantSabores) {
+        this.quantSabores = quantSabores;
     }
 
-    public Adicional getAdicionais() {
-        return adicionais;
+    public ArrayList<Pizza> getPizzas() {
+        return pizzas;
     }
 
-    public void setAdicionais(Adicional adicionais) {
-        this.adicionais = adicionais;
+    public void setPizzas(ArrayList<Pizza> pizzas) {
+        this.pizzas = pizzas;
+    }
+
+    public ArrayList<Adicional> getAditivos() {
+        return aditivos;
+    }
+
+    public void setAditivos(ArrayList<Adicional> aditivos) {
+        this.aditivos = aditivos;
+    }
+
+    public Double getValorTotal() {
+        return ValorTotal;
+    }
+
+    public void setValorTotal(Double ValorTotal) {
+        this.ValorTotal = ValorTotal;
     }
 
     public Borda getBorda() {
@@ -51,12 +66,8 @@ public class Pedido {
     public void setBorda(Borda borda) {
         this.borda = borda;
     }
+    
+    
 
-    public int getQuantSabores() {
-        return quantSabores;
-    }
-
-    public void setQuantSabores(int quantSabores) {
-        this.quantSabores = quantSabores;
-    }
+    
 }

@@ -184,13 +184,21 @@ public class Main {
 //        ingMussarela.add(new Ingrediente("Azeitona"));
 
         Database database = new Database();
-        database = (Database)Serialization.read(".\\pizzaria_database.dat");
+//        database = (Database)Serialization.read(".\\pizzaria_database.dat");;
         
 //      ArrayList<Pedido> pedidos = database.getPedidos();
         ArrayList<Pizza> cardapio = database.getListaPizza();
         ArrayList<Adicional> aditivos = database.getAditivos();
         ArrayList< Tamanho> tamanhos = database.getTamanhos();
-        
+        ArrayList< Ingrediente> listaIngredientes = new ArrayList<Ingrediente>();
+        ArrayList<Administrador> administradores = new ArrayList<Administrador>();
+        ArrayList<Borda> bordas = new ArrayList<Borda>();
+        ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+        Cliente cliente = null;
+//        
+//        ArrayList< Ingrediente> listaIngredientes = database.getIngredientes();
+//        ArrayList<Administrador> administradores = database.getAdministrador();
+//        ArrayList<Borda> bordas = database.getBordas();
         
         
 //        
@@ -305,11 +313,20 @@ public class Main {
         
    Scanner input = new Scanner(System.in);
                
-        
+        administradores.add(new Administrador("yuu", "mirainikki"));
         int navegacao = 0 ; 
         int quantSabores = 0;
         int escolherPizza = 0;
         int escolherAdicional = 0;
+        int painelAdm = 0;
+        int painelPizza = 0;
+        int painelIng = 0;
+        int painelBord = 0;
+        int painelCliente = 0;
+        int painelAditiv = 0;
+        int painelTam = 0;
+        String login = "";
+        String senha = "";
         ArrayList<Pizza> PizzasPedido = new ArrayList<>();
         ArrayList<Adicional> aditivosPedido = new ArrayList<>();
         
@@ -321,150 +338,613 @@ public class Main {
         
         do{
             System.out.println("=================  La Pizzeria  ==================");
-            System.out.println("Deseja visualizar o cardápio?");
-            System.out.println(" 1 - para SIM");
+            System.out.println("Bem vindos");
+            System.out.println(" 1 - Deseja entrar como Administrador");
+            System.out.println(" 2 - Deseja entrar como Cliente");
             System.out.println(" 0 - Caso deseje finalizar a aplicação");
             System.out.println("==================================================");
             navegacao = input.nextInt();
             
-            
-            
             if( navegacao == 1 ){
-                
-                do {
-                    System.out.println("===============  Quantidade de sabores  ================");
-                    System.out.println(" Quantos sabores deseja na sua pizza");
-                    System.out.println(" 1 - Pizza de um sabor");
-                    System.out.println(" 2 - Pizza de dois sabores");
-                    System.out.println(" 0 - Caso deseje voltar");
-                    System.out.println("==================================================");
-                    quantSabores = input.nextInt();
-                    
-                    if( quantSabores == 1 || quantSabores == 2 ){
+                boolean logar = false;
+                String senhaAdm = "";
+                System.out.println("Digite seu nome e senha ");
+                System.out.print("nome: ");
+                login = input.next();
+                System.out.println("");
+                for(int c = 0; c < administradores.size(); c++){
+                    Administrador adm = administradores.get(c);
+                    if(adm.getNome().equalsIgnoreCase(login)){
+                        logar = true;
+                        senhaAdm = adm.getSenha();
+                    }
+                }
+                if(logar){
+                    System.out.print("senha: ");
+                    senha = input.next();
+                    System.out.println("");
+                    System.out.println("senhaadm"+senhaAdm);
+                    System.out.println(senha);
+                    if(senha.equals(senhaAdm)){
                         
-                        do {
-                            System.out.println("===================  TAMANHOS  ===================");
-                            for (int i = 0; i < tamanhos.size(); i++) {
-                                Tamanho tamanho = tamanhos.get(i);
-                                System.out.println( "Digite: "+tamanho.getId()+" para escolher o tamanho " + tamanho.getNomeTamanho());
+                        
 
-                                System.out.println(" ");
-                                System.out.println("                    ~~                    ");
-
-                            }
-                            System.out.println( "Digite: "+ tamanhos.size() + "  - Caso deseje voltar ");
-                            System.out.println(" ");
+                    do{
+                        System.out.println("==============  Painel Administrativo  ===============");
+                        System.out.println(" 1 - Pizzas");
+                        System.out.println(" 2 - Ingredientes ");
+                        System.out.println(" 3 - Bordas");
+                        System.out.println(" 4 - Aditivos");
+                        System.out.println(" 4 - Tamanhos");
+                        System.out.println(" 0 - Caso deseje sair do painel Administrativo");
+                        System.out.println("==================================================");
+                        painelAdm = input.nextInt();
+                        if( painelAdm == 1){
+                            System.out.println("==============  Pizzas  ===============");
+                            System.out.println(" 1 - Adicionar pizza");
+                            System.out.println(" 2 - Excluir pizza");
+                            System.out.println(" 3 - Visualizar pizzas");
+                            System.out.println(" 0 - Caso deseje sair do painel de pizzas");
                             System.out.println("==================================================");
-
-                            System.out.println(" ");
-                            System.out.println("Escolha uma opção ");
-                            escolherTamanho = input.nextInt();
-
-                            if(escolherTamanho >= 0 && escolherTamanho < tamanhos.size()){
-                            // codigo continua aqui 
-
-                                for(int q = 0 ; q < quantSabores; q++  ){
-                                    do {
-                                        System.out.println("===================  CARDÁPIO  ===================");
-                                        for (int c = 0; c < cardapio.size(); c++) {
-                                            Pizza pizza = cardapio.get(c);
-                                            ArrayList<Ingrediente> ingredientes = pizza.getIngredientes();
-                                            System.out.println( "Digite: "+pizza.getId()+" para escolher comprar a pizza " + pizza.getNome());
-                                            for(int i = 0; i < ingredientes.size(); i++){
-                                                Ingrediente ingrediente = ingredientes.get(i);
-                                                System.out.print( ingrediente.getNome() + ", ");
-                                            }
-
-
+                            painelPizza = input.nextInt();
+                            if( painelPizza == 1){
+                                String nome = "";
+                                double valor = 0.0;
+                                int fimIng = 0;
+                                ArrayList<Ingrediente> ingrNovPizza = new ArrayList<>();
+                                System.out.println("==============  Adicionar pizza  ===============");
+                                System.out.println(" Digite o nome da pizza ");
+                                nome = input.next();
+                                System.out.println(" Digite o Valor da pizza ");
+                                valor = input.nextDouble();
+                                do{
+                                    System.out.println("===========  Adicionar ingrediente da pizza  ============");
+                                    System.out.println(" 1 - adicionar um novo ingrediente ");
+                                    System.out.println(" 0 - Caso não deseje adicionar mais ingredientes");
+                                    System.out.println("==================================================");
+                                    fimIng = input.nextInt();
+                                    if(fimIng == 1){
+                                        int add = 0;
+                                        for( int n = 0; n < listaIngredientes.size(); n++){
+                                            Ingrediente ing = listaIngredientes.get(n);
+                                            System.out.println( "Digite: "+ing.getId()+" para adicionar o ingrediente " + ing.getNome() + " nesta pizza.");
                                             System.out.println(" ");
                                             System.out.println("                    ~~                    ");
                                         }
-
-                                        System.out.println( cardapio.size() + "  - Caso deseje sair do cardápio");
-                                        System.out.println(" ");
+                                        System.out.println("");
                                         System.out.println("==================================================");
-
-                                        System.out.println(" ");
-                                        if(quantSabores == 1 ){
-                                            System.out.println("Escolha uma opção para sua Pizza ");
-                                        } else if(quantSabores == 2){
-                                            System.out.println( "Escolha uma opção para a "+ (q+1) + "ª metade da sua Pizza." );
+                                        add = input.nextInt();
+                                        if(add >= 0 && add < listaIngredientes.size()){
+                                            ingrNovPizza.add(listaIngredientes.get(add));
                                         }
                                         
-                                        escolherPizza = input.nextInt();
-
-
-                                        if(escolherPizza >= 0 && escolherPizza < cardapio.size()){
-                                            System.out.println("Sua escolha foi "+ cardapio.get(escolherPizza).getNome());
-                                            System.out.println("");
-                                            System.out.println(" Digite: 1 - Confirmar escolha");
-                                            System.out.println(" Digite: 2 - Cancelar escolha");
-                                            int addPizza = input.nextInt();
-                                            if( addPizza == 1 ){
-                                            
-                                                PizzasPedido.add(cardapio.get(escolherPizza));
-                                                escolherPizza = cardapio.size();
-                                            }
-                    
-
-                                        } 
-
-
-                                    } while( escolherPizza != cardapio.size() ) ;
-
+                                    } 
+                                } while(fimIng != 0 );
+                                
+                                if(!nome.equalsIgnoreCase("") && valor > 0.0 && ingrNovPizza.size() > 0){
+                                    cardapio.add(new Pizza( cardapio.size(), nome , valor , ingrNovPizza));
                                 }
+                            } else if(painelPizza == 2){
+                                int remove = 0;
+                                String confirm = "";
+                                System.out.println("===========  Remover pizza  ============");
+                                System.out.println("");
+                                System.out.println(" Digite o id da pizza que deseja excluir");
+                                System.out.println("==================================================");
+                                remove = input.nextInt();
+                                
+                                if(remove >= 0 && remove < cardapio.size()){
+                                    Pizza pizza = cardapio.get(remove);
+                                    System.out.println(" Deseja excluir a pizza "+ pizza.getNome());
+                                    System.out.println(" Digite SIM para confirmar a exclusão");
+                                    System.out.println(" Caso nao deseje excluir digite qualquer outra coisa");
+                                    System.out.println(" ==================================================");
+                                    if(confirm.equals(" SIM")){
+                                       cardapio.remove(remove);
+                                       System.out.println(" A pizza "+ pizza.getNome()+ " foi excluida com sucesso");
+                                    } else {
+                                        System.out.println(" Falha ao excluir, lembre-se de digitar 'SIM' em caixa alta. ");
+                                    }
+                                } else{
+                                    System.out.println(" Você precisa escolher uma opção valida.");
+                                    System.out.println(" Caso tenha duvidads de qual excluir use a opção de visualizar Pizzas para facilitar");
+                                }
+
+                            } else if(painelPizza == 3) {
+                                for (int i = 0; i < cardapio.size(); i++) {
+                                    Pizza pizza = cardapio.get(i);
+                                    System.out.println( " "+pizza.getId()+" --- " + pizza.getNome());
+                                    System.out.println(" ");
+                                    System.out.println("                 ~~                 ");
+                                }
+            
+                            }
+                        } else if( painelAdm == 2){
+                            System.out.println("==============  Ingredientes  ===============");
+                            System.out.println(" 1 - Adicionar ingredientes");
+                            System.out.println(" 2 - Excluir ingredientes");
+                            System.out.println(" 3 - Visualizar ingredientes");
+                            System.out.println(" 0 - Caso deseje sair do painel de ingredientes");
+                            System.out.println("==================================================");
+                            painelIng = input.nextInt();
+                            if( painelIng == 1){
+                                String nome = "";
+                                int fimIng = 0;                               
+                                System.out.println("==============  Adicionar ingrediente  ===============");
+                                System.out.println(" Digite o nome da ingrediente ");
+                                nome = input.next();
+                                
+                                if(!nome.equalsIgnoreCase("") ){
+                                    listaIngredientes.add(new Ingrediente( listaIngredientes.size(), nome));
+                                }
+                            } else if(painelIng == 2){
+                                int remove = 0;
+                                String confirm = "";
+                                System.out.println("===========  Remover Ingredientes  ============");
+                                System.out.println("");
+                                System.out.println(" Digite o id do ingrediente que deseja excluir");
+                                System.out.println("==================================================");
+                                remove = input.nextInt();
+                                
+                                if(remove >= 0 && remove < listaIngredientes.size()){
+                                    Ingrediente ingrediente = listaIngredientes.get(remove);
+                                    System.out.println(" Deseja excluir o ingrediente "+ ingrediente.getNome());
+                                    System.out.println(" Digite SIM para confirmar a exclusão");
+                                    System.out.println(" Caso não deseje excluir digite qualquer outra coisa");
+                                    System.out.println(" ==================================================");
+                                    if(confirm.equals(" SIM")){
+                                       listaIngredientes.remove(remove);
+                                       System.out.println(" O ingrediente "+ ingrediente.getNome()+ " foi excluida com sucesso");
+                                    } else {
+                                        System.out.println(" Falha ao excluir, lembre-se de digitar 'SIM' em caixa alta. ");
+                                    }
+                                } else{
+                                    System.out.println(" Você precisa escolher uma opção valida.");
+                                    System.out.println(" Caso tenha duvidas de qual excluir use a opção de visualizar ingredientes para facilitar");
+                                }
+
+                            } else if(painelIng == 3) {
+                                for (int i = 0; i < listaIngredientes.size(); i++) {
+                                    Ingrediente ingrediente = listaIngredientes.get(i);
+                                    System.out.println( " "+ingrediente.getId()+" --- " + ingrediente.getNome());
+                                    System.out.println(" ");
+                                    System.out.println("                 ~~                 ");
+                                }
+            
+                            }
+                            
+                        } else if( painelAdm == 3){
+                            System.out.println("==============  Bordas  ===============");
+                            System.out.println(" 1 - Adicionar borda");
+                            System.out.println(" 2 - Excluir borda");
+                            System.out.println(" 3 - Visualizar bordas");
+                            System.out.println(" 0 - Caso deseje sair do painel de bordas");
+                            System.out.println("==================================================");
+                            painelBord = input.nextInt();
+                            if( painelBord == 1){
+                                String nome = "";
+                                int fimIng = 0;   
+                                double valor = 0.0;
+                                System.out.println("==============  Adicionar borda  ===============");
+                                System.out.println(" Digite o nome da borda ");
+                                nome = input.next();
+                                System.out.println(" Digite o Valor da borda ");
+                                valor = input.nextDouble();
+                                if(!nome.equalsIgnoreCase("") && valor > 0.0){
+                                    bordas.add(new Borda(bordas.size(), nome, valor));
+                                }
+                            } else if(painelBord == 2){
+                                int remove = 0;
+                                String confirm = "";
+                                System.out.println("===========  Remover borda  ============");
+                                System.out.println("");
+                                System.out.println(" Digite o id da borda que deseja excluir");
+                                System.out.println("==================================================");
+                                remove = input.nextInt();
+                                
+                                if(remove >= 0 && remove < bordas.size()){
+                                    Borda borda = bordas.get(remove);
+                                    System.out.println(" Deseja excluir a borda "+ borda.getNome());
+                                    System.out.println(" Digite SIM para confirmar a exclusão");
+                                    System.out.println(" Caso não deseje excluir digite qualquer outra coisa");
+                                    System.out.println(" ==================================================");
+                                    if(confirm.equals(" SIM")){
+                                       bordas.remove(remove);
+                                       System.out.println(" A borda "+ borda.getNome()+ " foi excluida com sucesso");
+                                    } else {
+                                        System.out.println(" Falha ao excluir, lembre-se de digitar 'SIM' em caixa alta. ");
+                                    }
+                                } else{
+                                    System.out.println(" Você precisa escolher uma opção valida.");
+                                    System.out.println(" Caso tenha duvidas de qual excluir use a opção de visualizar bordas para facilitar");
+                                }
+
+                            } else if(painelBord == 3) {
+                                for (int i = 0; i < bordas.size(); i++) {
+                                    Borda borda = bordas.get(i);
+                                    System.out.println( " "+borda.getId()+" --- " + borda.getNome());
+                                    System.out.println(" ");
+                                    System.out.println("                 ~~                 ");
+                                }
+            
+                            }
+                            
+                        } 
+                        
+                         else if( painelAdm == 4){
+                            System.out.println("==============  Aditivos  ===============");
+                            System.out.println(" 1 - Adicionar aditivo");
+                            System.out.println(" 2 - Excluir aditivo");
+                            System.out.println(" 3 - Visualizar aditivos");
+                            System.out.println(" 0 - Caso deseje sair do painel de bordas");
+                            System.out.println("==================================================");
+                            painelAditiv = input.nextInt();
+                            if( painelAditiv == 1){
+                                String nome = "";
+                                int ing = 0;   
+                                double valor = 0.0;
+                                System.out.println("==============  Adicionar aditivo  ===============");
+                                System.out.println(" ");
+                                System.out.println(" Digite o id do ingrediente que deseja transformar em Aditivo ");
+                                ing = input.nextInt();
+                                System.out.println(" Digite o Valor do Aditivo ");
+                                valor = input.nextDouble();
+                                if(ing >= 0 && ing < listaIngredientes.size() && valor > 0.0){
+                                    aditivos.add( new Adicional(aditivos.size(), listaIngredientes.get(ing), valor));
+                                }
+                            } else if(painelAditiv == 2){
+                                int remove = 0;
+                                String confirm = "";
+                                System.out.println("===========  Remover Aditivo  ============");
+                                System.out.println("");
+                                System.out.println(" Digite o id do Aditivo que deseja excluir");
+                                System.out.println("==================================================");
+                                remove = input.nextInt();
+                                
+                                if(remove >= 0 && remove < aditivos.size()){
+                                    Adicional adicional = aditivos.get(remove);
+                                    System.out.println(" Deseja excluir o aditivo "+ adicional.getNome());
+                                    System.out.println(" Digite SIM para confirmar a exclusão");
+                                    System.out.println(" Caso não deseje excluir digite qualquer outra coisa");
+                                    System.out.println(" ==================================================");
+                                    if(confirm.equals(" SIM")){
+                                       aditivos.remove(remove);
+                                       System.out.println(" O aditivo "+ adicional.getNome()+ " foi excluida com sucesso");
+                                    } else {
+                                        System.out.println(" Falha ao excluir, lembre-se de digitar 'SIM' em caixa alta. ");
+                                    }
+                                } else{
+                                    System.out.println(" Você precisa escolher uma opção valida.");
+                                    System.out.println(" Caso tenha duvidas de qual excluir use a opção de visualizar bordas para facilitar");
+                                }
+
+                            } else if(painelAditiv == 3) {
+                                for (int i = 0; i < aditivos.size(); i++) {
+                                    Adicional adicional = aditivos.get(i);
+                                    System.out.println( " "+adicional.getId()+" --- " + adicional.getNome());
+                                    System.out.println(" ");
+                                    System.out.println("                 ~~                 ");
+                                }
+            
+                            }
+                            
+                        } 
+                         else if( painelAdm == 5){
+                            System.out.println("==============  Tamanhos  ===============");
+                            System.out.println(" 1 - Adicionar Tamanho");
+                            System.out.println(" 2 - Excluir tamanho");
+                            System.out.println(" 3 - Visualizar tamanhos");
+                            System.out.println(" 0 - Caso deseje sair do painel de tamanhos");
+                            System.out.println("==================================================");
+                            painelAditiv = input.nextInt();
+                            if( painelTam == 1){
+                                String nome = "";
+                                double mult = 0.0;
+                                System.out.println("==============  Adicionar tamanho  ===============");
+                                System.out.println("");
+                                System.out.println(" Digite o nome do tamanho");
+                                nome = input.next();
+                                System.out.println("");
+                                System.out.println(" Digite o multiplicador");
+                                System.out.println(" ex: 1, para 100% do preço, 1.5 para 150% do preço e etc");
+                                mult = input.nextDouble();
+                                if(!nome.equalsIgnoreCase("") && mult > 0.0){
+                                    tamanhos.add(new Tamanho(tamanhos.size(), nome, mult));
+                                }
+                            } else if(painelAditiv == 2){
+                                int remove = 0;
+                                String confirm = "";
+                                System.out.println("===========  Remover Tamanho  ============");
+                                System.out.println("");
+                                System.out.println(" Digite o id do Tamanho que deseja excluir");
+                                System.out.println("==================================================");
+                                remove = input.nextInt();
+                                
+                                if(remove >= 0 && remove < tamanhos.size()){
+                                    Tamanho tamanho = tamanhos.get(remove);
+                                    System.out.println(" Deseja excluir o tamanho "+ tamanho.getNomeTamanho());
+                                    System.out.println(" Digite SIM para confirmar a exclusão");
+                                    System.out.println(" Caso não deseje excluir digite qualquer outra coisa");
+                                    System.out.println(" ==================================================");
+                                    if(confirm.equals(" SIM")){
+                                       tamanhos.remove(remove);
+                                       System.out.println(" O aditivo "+ tamanho.getNomeTamanho()+ " foi excluida com sucesso");
+                                    } else {
+                                        System.out.println(" Falha ao excluir, lembre-se de digitar 'SIM' em caixa alta. ");
+                                    }
+                                } else{
+                                    System.out.println(" Você precisa escolher uma opção valida.");
+                                    System.out.println(" Caso tenha duvidas de qual excluir use a opção de visualizar tamanho para facilitar");
+                                }
+
+                            } else if(painelTam == 3) {
+                                for (int i = 0; i < tamanhos.size(); i++) {
+                                    Tamanho tamanho = tamanhos.get(i);
+                                    System.out.println( " "+tamanho.getId()+" --- " + tamanho.getNomeTamanho());
+                                    System.out.println(" ");
+                                    System.out.println("                 ~~                 ");
+                                }
+            
+                            }
+                            
+                        }
+                        
+                        
+                        
+                        
+                        
+                    } while(painelAdm != 0);
+                        
+                    } else {
+                        System.out.println("senha incorreta.");
+                    }
+                } else {
+                    System.out.println("Administrador não encontrado");
+                }
+            
+                
+                
+            }
+            
+            if( navegacao == 2 ){
+                
+                boolean logar = false;
+                String senhaCliente = "";
+                System.out.println("Digite seu nome e senha ");
+                System.out.print("nome: ");
+                login = input.next();
+                System.out.println("");
+                for(int c = 0; c < clientes.size(); c++){
+                    cliente = clientes.get(c);
+                    if(cliente.getNome().equalsIgnoreCase(login)){
+                        logar = true;
+                        senhaCliente = cliente.getSenha();
+                    }
+                }
+                if(logar){
+                    System.out.print("senha: ");
+                    senha = input.next();
+                    System.out.println("");
+                    if(senha.equals(senhaCliente)){
+                      
+
+                        do{
+                            System.out.println("=================  La Pizzeria  ==================");
+                            System.out.println("Bem vindo");
+                            System.out.println(" 1 - Deseja Fazer um novo pedido");
+                            System.out.println(" 2 - Deseja ver pedidos anteriores");
+                            System.out.println(" 0 - Caso deseje voltar ao menu Principal");
+                            System.out.println("==================================================");
+                            painelCliente = input.nextInt();
+                            
+                            if( painelCliente == 1){
                                 
                                 do {
-                                    
-                                    System.out.println("==============  INGREDIENTES ADICIONAIS  ==============");
-                                        for (int a = 0; a < aditivos.size(); a++) {
-                                            Adicional adicional = aditivos.get(a);
-                                            System.out.printf("Digite: %d para escolher comprar o adicional de %s  custando apenas %.2f",adicional.getId(), adicional.getNome(),adicional.getValor() );
-                                            
+                                System.out.println("===============  Quantidade de sabores  ================");
+                                System.out.println(" Quantos sabores deseja na sua pizza");
+                                System.out.println(" 1 - Pizza de um sabor");
+                                System.out.println(" 2 - Pizza de dois sabores");
+                                System.out.println(" 0 - Caso deseje voltar");
+                                System.out.println("==================================================");
+                                quantSabores = input.nextInt();
+
+                                if( quantSabores == 1 || quantSabores == 2 ){
+
+                                    do {
+                                        System.out.println("===================  TAMANHOS  ===================");
+                                        for (int i = 0; i < tamanhos.size(); i++) {
+                                            Tamanho tamanho = tamanhos.get(i);
+                                            System.out.println( "Digite: "+tamanho.getId()+" para escolher o tamanho " + tamanho.getNomeTamanho());
+
                                             System.out.println(" ");
                                             System.out.println("                    ~~                    ");
-                                            System.out.println(" ");
-                                        }
 
-                                        System.out.println( "Digite: "+aditivos.size() + "  - Caso deseje sair do cardapio de adicionais");
+                                        }
+                                        System.out.println( "Digite: "+ tamanhos.size() + "  - Caso deseje voltar ");
                                         System.out.println(" ");
                                         System.out.println("==================================================");
 
                                         System.out.println(" ");
-                                        
-                                        System.out.println(  );
-                                        System.out.println("Escolha uma opção de adcional ");
-                                        escolherAdicional = input.nextInt();
+                                        System.out.println("Escolha uma opção ");
+                                        escolherTamanho = input.nextInt();
+
+                                        if(escolherTamanho >= 0 && escolherTamanho < tamanhos.size()){
+                                        // codigo continua aqui 
+
+                                            for(int q = 0 ; q < quantSabores; q++  ){
+                                                do {
+                                                    System.out.println("===================  CARDÁPIO  ===================");
+                                                    for (int c = 0; c < cardapio.size(); c++) {
+                                                        Pizza pizza = cardapio.get(c);
+                                                        ArrayList<Ingrediente> ingredientes = pizza.getIngredientes();
+                                                        System.out.println( "Digite: "+pizza.getId()+" para escolher comprar a pizza " + pizza.getNome());
+                                                        for(int i = 0; i < ingredientes.size(); i++){
+                                                            Ingrediente ingrediente = ingredientes.get(i);
+                                                            System.out.print( ingrediente.getNome() + ", ");
+                                                        }
 
 
-                                        if(escolherAdicional >= 0 && escolherAdicional < aditivos.size()){
-                                            System.out.println("Sua escolha foi "+ aditivos.get(escolherAdicional).getNome());
-                                            System.out.println("");
-                                            System.out.println(" Digite: 1 - Confirmar escolha");
-                                            System.out.println(" Digite: 2 - Cancelar escolha");
-                                            int addAdicional = input.nextInt();
-                                            if( addAdicional == 1 ){
-                                            
-                                                aditivosPedido.add(aditivos.get(escolherAdicional));
-                                                
+                                                        System.out.println(" ");
+                                                        System.out.println("                    ~~                    ");
+                                                    }
+
+                                                    System.out.println( cardapio.size() + "  - Caso deseje sair do cardápio");
+                                                    System.out.println(" ");
+                                                    System.out.println("==================================================");
+
+                                                    System.out.println(" ");
+                                                    if(quantSabores == 1 ){
+                                                        System.out.println("Escolha uma opção para sua Pizza ");
+                                                    } else if(quantSabores == 2){
+                                                        System.out.println( "Escolha uma opção para a "+ (q+1) + "ª metade da sua Pizza." );
+                                                    }
+
+                                                    escolherPizza = input.nextInt();
+
+
+                                                    if(escolherPizza >= 0 && escolherPizza < cardapio.size()){
+                                                        System.out.println("Sua escolha foi "+ cardapio.get(escolherPizza).getNome());
+                                                        System.out.println("");
+                                                        System.out.println(" Digite: 1 - Confirmar escolha");
+                                                        System.out.println(" Digite: 2 - Cancelar escolha");
+                                                        int addPizza = input.nextInt();
+                                                        if( addPizza == 1 ){
+
+                                                            PizzasPedido.add(cardapio.get(escolherPizza));
+                                                            escolherPizza = cardapio.size();
+                                                        }
+
+
+                                                    } 
+
+
+                                                } while( escolherPizza != cardapio.size() ) ;
+
                                             }
-                    
-                                        }
-                                        
-                                    
-                                } while (escolherAdicional != aditivos.size());
-                            
-                            
-                                
-                            }
 
-                        } while (escolherTamanho != tamanhos.size());
+                                            do {
+
+                                                System.out.println("==============  INGREDIENTES ADICIONAIS  ==============");
+                                                    for (int a = 0; a < aditivos.size(); a++) {
+                                                        Adicional adicional = aditivos.get(a);
+                                                        System.out.printf("Digite: %d para escolher comprar o adicional de %s  custando apenas %.2f",adicional.getId(), adicional.getNome(),adicional.getValor() );
+
+                                                        System.out.println(" ");
+                                                        System.out.println("                    ~~                    ");
+                                                        System.out.println(" ");
+                                                    }
+
+                                                    System.out.println( "Digite: "+aditivos.size() + "  - Caso deseje sair do cardapio de adicionais");
+                                                    System.out.println(" ");
+                                                    System.out.println("==================================================");
+
+                                                    System.out.println(" ");
+
+                                                    System.out.println(  );
+                                                    System.out.println("Escolha uma opção de adcional ");
+                                                    escolherAdicional = input.nextInt();
+
+
+                                                    if(escolherAdicional >= 0 && escolherAdicional < aditivos.size()){
+                                                        System.out.println("Sua escolha foi "+ aditivos.get(escolherAdicional).getNome());
+                                                        System.out.println("");
+                                                        System.out.println(" Digite: 1 - Confirmar escolha");
+                                                        System.out.println(" Digite: 2 - Cancelar escolha");
+                                                        int addAdicional = input.nextInt();
+                                                        if( addAdicional == 1 ){
+
+                                                            aditivosPedido.add(aditivos.get(escolherAdicional));
+
+                                                        }
+
+                                                    }
+
+
+                                            } while (escolherAdicional != aditivos.size());
+
+
+
+                                        }
+
+                                    } while (escolherTamanho != tamanhos.size());
+
+
+                                }
+
+                            } while(quantSabores != 0 );
+
+
+
+
+
+
+                            } else if( painelCliente == 2){
+                                
+                                ArrayList<Pedido> meusPedidos =  cliente.getPedidosCliente();
+                                ArrayList<Pizza> minhaPizza = null;
+                                ArrayList<Adicional> meusAditivos = null;
+                                Borda borda = null;
+                                Double valorTotal = null;
+
+                                System.out.println("=================  Meus pedidos  ==================");
+                                System.out.println(" Lista de pedidos");
+                                System.out.println("");
+                                for (int i = 0; i < meusPedidos.size(); i++) {
+                                    Pedido pedido = meusPedidos.get(i);
+                                    minhaPizza = pedido.getPizzas();
+                                    meusAditivos = pedido.getAditivos();
+                                    System.out.println( " pedido: "+pedido.getId());
+                                    System.out.println("");
+                                    System.out.print(" Pizza de :");
+                                    
+                                    for (int j = 0; j < minhaPizza.size(); j++) {
+                                        Pizza pizza = minhaPizza.get(j);
+                                        System.out.print(pizza.getNome());
+                                        if(minhaPizza.size() > 1){
+                                            System.out.print(" e ");
+                                        } else if(j == minhaPizza.size() - 1) {
+                                            System.out.println(".");
+                                        }
+                                    }
+                                    if(meusAditivos.size() > 0){
+                                        System.out.println("");
+                                    System.out.print(" Com adicional de: ");
+                                    
+                                    for (int j = 0; j < meusAditivos.size(); j++) {
+                                        Adicional adicional = meusAditivos.get(j);
+                                        System.out.print(adicional.getNome());
+                                        if(meusAditivos.size() > 1){
+                                            System.out.print(" e ");
+                                        } else if(j == meusAditivos.size() - 1) {
+                                            System.out.println(".");
+                                        }
+                                    }
+                                    }
+                                    if(borda != null){
+                                        System.out.println("");
+                                        System.out.print(" Com borda de : ");
+                                        System.out.println( borda.getNome());
+                                        System.out.println("");
+                                   
+                                        
+                                    }
+                                    
+                                    System.out.println(" No valor de: ");
+                                    System.out.printf(" R$: %.2d", valorTotal);
+                                    
+                                }
+                            }
+                            
+                            
+                        } while( painelCliente != 0);
                         
-                        
+                    } else {
+                        System.out.println("senha incorreta.");
                     }
-           
-                } while(quantSabores != 0 );
-            
+                } else {
+                    System.out.println("Administrador não encontrado");
+                }
+                
                 
             }
         
@@ -474,6 +954,10 @@ public class Main {
         database.setTamanhos(tamanhos);
         database.setAditivos(aditivos);
         
+        
+        database.setIngredientes(listaIngredientes);
+        database.setAdministrador(administradores);
+        database.setBordas(bordas);
         Serialization.write(database, ".\\pizzaria_database.dat");
        
         

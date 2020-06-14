@@ -4,24 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Cliente implements Serializable{
-    private String nome;
+public class Cliente extends Usuario implements Serializable {
+    
     private String endereco;
     private String telefone;
     private ArrayList<Pedido> pedidosCliente;
 
-    public Cliente(String nome, String endereco, String telefone) {
-        this.nome = nome;
+    public Cliente(String endereco, String telefone, ArrayList<Pedido> pedidosCliente, String nome, String senha) {
+        super(nome, senha);
         this.endereco = endereco;
         this.telefone = telefone;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+        this.pedidosCliente = pedidosCliente;
     }
 
     public String getEndereco() {
@@ -47,6 +40,7 @@ public class Cliente implements Serializable{
     public void setPedidosCliente(ArrayList<Pedido> pedidosCliente) {
         this.pedidosCliente = pedidosCliente;
     }
+
 
    
 }

@@ -13,6 +13,24 @@ public class Database implements Serializable {
     private ArrayList<Pizza> ListaPizza = new ArrayList<>();
     private ArrayList<Tamanho> tamanhos = new ArrayList<>();
     private ArrayList<Cliente> clientes = new ArrayList<>();
+    private ArrayList<Administrador> administrador = new ArrayList<>();
+
+    public ArrayList<Administrador> getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(ArrayList<Administrador> administrador) {
+        this.administrador = administrador;
+    }
+
+    public ArrayList<Ingrediente> getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(ArrayList<Ingrediente> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+    private ArrayList<Ingrediente> ingredientes = new ArrayList<>();
 
 //   public ArrayList<Pedido> getPedidos() {
 //        return Pedidos;

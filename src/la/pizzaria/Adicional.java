@@ -22,8 +22,8 @@ public class Adicional extends Ingrediente{
     
     
 
-    public Adicional(int id, String nome, double valor) {
-        super(nome);
+    public Adicional(int id, Ingrediente ing , double valor) {
+        super( ing.getId() , ing.getNome());
         this.id = id;
         this.valor = valor;
     }
