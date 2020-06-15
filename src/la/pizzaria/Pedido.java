@@ -1,8 +1,9 @@
 package la.pizzaria;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pedido {
+public class Pedido implements Serializable{
     private int id;
     private int quantSabores; //perguntar ao pessoal se sera implementado
     private ArrayList <Pizza> pizzas;
@@ -17,6 +18,31 @@ public class Pedido {
         this.aditivos = aditivos;
         this.ValorTotal = ValorTotal;
         this.borda = borda;
+    }
+    public Pedido(int id, int quantSabores, ArrayList<Pizza> pizzas, ArrayList<Adicional> aditivos, Double ValorTotal) {
+        this.id = id;
+        this.quantSabores = quantSabores;
+        this.pizzas = pizzas;
+        this.aditivos = aditivos;
+        this.ValorTotal = ValorTotal;
+        this.borda = null;
+    }
+    public Pedido(int id, int quantSabores, ArrayList<Pizza> pizzas, Double ValorTotal, Borda borda) {
+        this.id = id;
+        this.quantSabores = quantSabores;
+        this.pizzas = pizzas;
+        this.ValorTotal = ValorTotal;
+        this.aditivos = null;
+        this.borda = borda;
+    }
+    public Pedido(int id, int quantSabores, ArrayList<Pizza> pizzas, Double ValorTotal) {
+        this.id = id;
+        this.quantSabores = quantSabores;
+        this.pizzas = pizzas;
+        this.aditivos = null;
+        this.ValorTotal = ValorTotal;
+        this.borda = null;
+        
     }
 
     public int getId() {

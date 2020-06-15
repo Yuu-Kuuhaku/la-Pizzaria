@@ -10,11 +10,11 @@ public class Cliente extends Usuario implements Serializable {
     private String telefone;
     private ArrayList<Pedido> pedidosCliente;
 
-    public Cliente(String endereco, String telefone, ArrayList<Pedido> pedidosCliente, String nome, String senha) {
+    public Cliente(String endereco, String telefone,  String nome, String senha) {
         super(nome, senha);
         this.endereco = endereco;
         this.telefone = telefone;
-        this.pedidosCliente = pedidosCliente;
+        this.pedidosCliente = new ArrayList<Pedido>();
     }
 
     public String getEndereco() {

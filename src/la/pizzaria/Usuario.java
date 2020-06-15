@@ -5,7 +5,9 @@
  */
 package la.pizzaria;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable{
     private String nome;
     private String senha;
 
